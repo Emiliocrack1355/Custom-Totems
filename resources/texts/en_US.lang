@@ -1,0 +1,18 @@
+### SYSTEMS
+emi.customT.systems.welcome=Stackable Totems - v%s%s \n§7By §eEmiliocrack1355
+emi.customT.system.saveSpawn=§7[World] >> §aSpawnPoint guardado en x:%s, y:%s, z:%s en el %s
+
+
+### TOTEMS
+emi.customT.useTotem.notEnought=§7[World] >> §c%s no tenia suficientes totems
+emi.customT.useTotem.fail=§7[World] >> %s ha usado un %s§7 con probabilidad %s >= %s\n§cHa muerto
+emi.customT.useTotem.prob=§7[World] >> %s ha usado un %s§7 con probabilidad %s >= %s
+emi.customT.useTotem.=§7[World] >> %s ha usado un %s
+
+
+### COMMANDS
+emi.customT.cmd.totem=§7Permite modificar los parametros de uso de los totems
+emi.customT.cmd.setProb=§7[World] >> Se establecio la probabilidad de uso del totem en %s
+emi.customT.cmd.setCost=§7[World] >> Se establecio el coste por uso del totem en %s
+emi.customT.cmd.notValidProb=§7[System] >> §cEl valor %s no es un rango valido §7< 1..100 >
+emi.customT.cmd.notValidCost=§7[System] >> §cEl valor %s no es un rango valido  §7< 1.. >
