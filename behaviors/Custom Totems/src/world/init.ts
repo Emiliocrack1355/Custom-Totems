@@ -51,7 +51,7 @@ class WorldInit {
   private onWorldInit(): void {
     afterEventsSimplified.onWorldReady((): void => {
       const dynamic = world.getDynamicProperty(utils.WorldDynamicID);
-      if (dynamic === undefined) {
+      if (typeof dynamic === "undefined") {
         world.setDynamicProperty(
           utils.WorldDynamicID,
           JSON.stringify({ prob: 0, cost: 1 })

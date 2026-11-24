@@ -26,7 +26,7 @@ class Utils {
    * @public
    * @author Emiliocrack1355 - 23/11/26 <04:10 pm>
    */
-  public readonly WorldDynamicID = "emi:TotemConfig";
+  public readonly WorldDynamicID = "emi:TotemCustomConfig";
 
   /**
    * Variable estatica que contiene el ID del totem
