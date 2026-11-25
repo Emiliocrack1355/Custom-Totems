@@ -465,7 +465,7 @@ class Utils {
     // },
     {
       id: "§0tp_totem",
-      data: 5,
+      data: 4,
       name: "§r§4Tp Totem",
       lore: ["§r§9On Use: Random Tp"],
       effects: [
