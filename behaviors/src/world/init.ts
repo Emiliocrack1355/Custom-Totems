@@ -33,7 +33,7 @@ class WorldInit {
    * @private
    * @author Emiliocrack1355 - 23/11/26 <10:30 am>
    */
-  private readonly addonBeta = true;
+  private readonly addonBeta = false;
 
   constructor() {
     this.onWorldInit();
@@ -54,7 +54,7 @@ class WorldInit {
       if (typeof dynamic === "undefined") {
         world.setDynamicProperty(
           utils.WorldDynamicID,
-          JSON.stringify({ prob: 0, cost: 1 })
+          JSON.stringify({ prob: 100, cost: 1 })
         );
         console.warn(`Creating World Dynamic Values of Config`);
       } else {
@@ -78,7 +78,7 @@ class WorldInit {
             translate: "emi.customT.system.welcome",
             with: [this.addonVer, this.addonBeta ? "-beta" : ""],
           });
-        }, worldToolsSimplified.convertSecondsToTicks(30));
+        }, worldToolsSimplified.convertSecondsToTicks(20));
       }
     });
   }
@@ -110,7 +110,7 @@ class WorldInit {
           return;
         }
         const raw = world.getDynamicProperty(utils.WorldDynamicID);
-        let config: { prob: number; cost: number } = { prob: 0, cost: 1 };
+        let config: { prob: number; cost: number } = { prob: 100, cost: 1 };
         if (typeof raw === "string") {
           try {
             config = { ...config, ...JSON.parse(raw) };
@@ -160,6 +160,46 @@ class WorldInit {
         });
       },
       { "emi:totem_options": ["prob", "cost"] }
+    );
+    beforeEventsSimplified.createCustomCommand(
+      {
+        name: "emi:spawn",
+        description: "emi.customT.cmd.spawn",
+        cheatsRequired: false,
+        permissionLevel: CommandPermissionLevel.Any,
+        optionalParameters: [
+          { name: "emi:clear", type: CustomCommandParamType.Enum },
+        ],
+      },
+      (origin, clear): undefined => {
+        const player = origin.initiator ?? origin.sourceEntity;
+        if (!(player instanceof Player)) return;
+        if (!player.hasTag("admin")) {
+          player.sendMessage({ translate: "emi.customT.cmd.notAdmin" });
+          return;
+        }
+        const tag = player
+          .getTags()
+          .find((t): boolean => t.startsWith("SpawnPoint:"));
+        if (!tag) {
+          player.sendMessage({ translate: "emi.customT.cmd.notSpawn" });
+          return;
+        }
+        if (clear) {
+          player.sendMessage({ translate: "emi.customT.cmd.clearSpawn" });
+          return;
+        } else {
+          const spawn = tag.split(":")[1];
+          const [coords, dim] = spawn.split(";");
+          const [x, y, z] = coords.split(",");
+          player.sendMessage({
+            translate: "emi.customT.system.saveSpawn",
+            with: [x, y, z, dim],
+          });
+          return;
+        }
+      },
+      { "emi:clear": ["clear"] }
     );
   }
 }
