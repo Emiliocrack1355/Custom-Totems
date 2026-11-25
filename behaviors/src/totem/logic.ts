@@ -98,7 +98,7 @@ class TotemLogic {
     ev: EntityHealBeforeEvent
   ): void {
     const raw = world.getDynamicProperty(utils.WorldDynamicID);
-    let config: { prob: number; cost: number } = { prob: 0, cost: 1 };
+    let config: { prob: number; cost: number } = { prob: 100, cost: 1 };
     if (typeof raw === "string") {
       try {
         config = { ...config, ...JSON.parse(raw) };

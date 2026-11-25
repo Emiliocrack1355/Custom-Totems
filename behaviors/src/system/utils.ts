@@ -76,7 +76,7 @@ class Utils {
       yield;
       const item = inv.getItem(i);
       if (!item || item.typeId !== this.totem) continue;
-      if (item.getLore()[0].startsWith("§0")) continue;
+      if (item.getLore()[0]?.startsWith("§0")) continue;
       for (const variant of this.totemVariants) {
         const query =
           i <= 8
@@ -308,11 +308,13 @@ class Utils {
   } {
     const spawnPoint = player
       .getTags()
-      .find((t): boolean => t.startsWith("spawn:"));
+      .find((t): boolean => t.startsWith("SpawnPoint:"));
     if (!spawnPoint) {
       // world.sendMessage("def world spawn");
-      const { x, y, z } = world.getDefaultSpawnLocation();
+      const { x, z } = world.getDefaultSpawnLocation();
       const dim = world.getDimension("overworld");
+      const topBlock = dim.getTopmostBlock({ x, z });
+      const y = topBlock ? topBlock.y + 1 : 100;
       return { x: x, y: y, z: z, dim: dim };
     } else {
       // world.sendMessage("spawnpoint");
