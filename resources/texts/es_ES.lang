@@ -1,7 +1,7 @@
 ### Systems
 emi.totems.system.welcome=§aStackable Totems - v%s%s \n§7By §eEmiliocrack1355
 
-emi.totems.system.saveSpawn=§7[World] >> §aSpawnpoint saved at x: %s, y: %s, z: %s en el %s
+emi.totems.system.saveSpawn=§7[System] >> §aSpawnpoint guardado en x: %s, y: %s, z: %s en el %s
 
 
 ### Totems
@@ -18,3 +18,7 @@ emi.totems.cmd.setProb=§7[World] >> Se establecio la probabilidad de uso del to
 emi.totems.cmd.setCost=§7[World] >> Se establecio el coste por uso del totem en %s
 emi.totems.cmd.notValidProb=§7[System] >> §cEl valor %s no es un rango valido §7< 1..100 >
 emi.totems.cmd.notValidCost=§7[System] >> §cEl valor %s no es un rango valido  §7< 1.. >
+
+emi.customT.cmd.spawn=§7Permite ver o limpiar el SpawnPoint guardado anteriormente
+emi.customT.cmd.notSpawn=§7[System] >> §cNo se posee un spawnpoint guardado
+emi.customT.cmd.clearSpawn=§7[System] >> §eSe ha eliminado el spawnpoint guardado

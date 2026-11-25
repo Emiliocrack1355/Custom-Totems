@@ -1,7 +1,7 @@
 ### Systems
 emi.customT.system.welcome=§aCustom Totems - v%s%s \n§7By §eEmiliocrack1355
 
-emi.customT.system.saveSpawn=§7[World] >> §aSpawnpoint saved at x: %s, y: %s, z: %s in the %s
+emi.customT.system.saveSpawn=§7[System] >> §aSpawnpoint saved at x: %s, y: %s, z: §%s in the %s
 
 
 ### TOTEMS
@@ -18,3 +18,7 @@ emi.customT.cmd.setProb=§7[World] >> Totem usage probability set to %s
 emi.customT.cmd.setCost=§7[World] >> Totem usage cost set to %s
 emi.customT.cmd.notValidProb=§7[System] >> §cThe value %s is not a valid range §7< 1..100 >
 emi.customT.cmd.notValidCost=§7[System] >> §cThe value %s is not a valid range §7< 1.. >
+
+emi.customT.cmd.spawn=§7Allows you to view or clear the previously saved SpawnPoint
+emi.customT.cmd.notSpawn=§7[System] >> §cNo saved spawnpoint found
+emi.customT.cmd.clearSpawn=§7[System] >> §eThe saved spawnpoint has been deleted
