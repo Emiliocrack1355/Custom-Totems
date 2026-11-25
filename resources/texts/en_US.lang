@@ -5,10 +5,10 @@ emi.customT.system.saveSpawn=§7[World] >> §aSpawnpoint saved at %s
 
 
 ### TOTEMS
-emi.customT.useTotem.notEnought=§7[World] >> §c%s didn't have enough customT
-emi.customT.useTotem.fail=§7[World] >> %s used a %s§7 with probability %s >= %s\n§cThey died
-emi.customT.useTotem.prob=§7[World] >> %s used a %s§7 with probability %s >= %s
-emi.customT.useTotem.=§7[World] >> %s used a %s
+emi.customT.useTotem.notEnought=§c>> %s didn't have enough customT
+emi.customT.useTotem.fail=§7>> %s used a %s§7 with probability %s >= %s\n§cThey died
+emi.customT.useTotem.prob=§7>> %s used a %s§7 with probability %s >= %s
+emi.customT.useTotem=§7>> %s used a %s
 
 
 ### COMMANDS

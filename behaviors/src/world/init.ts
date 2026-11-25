@@ -106,7 +106,7 @@ class WorldInit {
         const player = origin.initiator ?? origin.sourceEntity;
         if (!(player instanceof Player)) return;
         if (!player.hasTag("admin")) {
-          player.sendMessage({ translate: "emi.t1.cmd.notAdmin" });
+          player.sendMessage({ translate: "emi.customT.cmd.notAdmin" });
           return;
         }
         const raw = world.getDynamicProperty(utils.WorldDynamicID);
@@ -121,24 +121,38 @@ class WorldInit {
         system.run((): void => {
           switch (option) {
             case "prob":
+              if (value < 0 || value > 100) {
+                world.sendMessage({
+                  translate: "emi.customT.cmd.notValidProb",
+                  with: [String(value)],
+                });
+                return;
+              }
               config.prob = value;
               world.setDynamicProperty(
                 utils.WorldDynamicID,
                 JSON.stringify(config)
               );
               world.sendMessage({
-                translate: "emi.totems.system.setProb",
+                translate: "emi.customT.cmd.setProb",
                 with: [String(value)],
               });
               break;
             case "cost":
+              if (value < 1) {
+                world.sendMessage({
+                  translate: "emi.customT.cmd.notValidCost",
+                  with: [String(value)],
+                });
+                return;
+              }
               config.cost = value;
               world.setDynamicProperty(
                 utils.WorldDynamicID,
                 JSON.stringify(config)
               );
               world.sendMessage({
-                translate: "emi.totems.system.setCost",
+                translate: "emi.customT.cmd.setCost",
                 with: [String(value)],
               });
               break;
