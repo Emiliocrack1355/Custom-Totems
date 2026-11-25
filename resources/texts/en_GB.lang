@@ -1,7 +1,7 @@
 ### Systems
 emi.customT.system.welcome=§aCustom Totems - v%s%s \n§7By §eEmiliocrack1355
 
-emi.customT.system.saveSpawn=§7[World] >> §aSpawnpoint saved at %s
+emi.customT.system.saveSpawn=§7[World] >> §aSpawnpoint saved at x: %s, y: %s, z: %s in the %s
 
 
 ### TOTEMS

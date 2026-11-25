@@ -1,7 +1,7 @@
 ### Systems
 emi.totems.system.welcome=§aStackable Totems - v%s%s \n§7By §eEmiliocrack1355
 
-emi.totems.system.saveSpawn=§7[World] >> §aSpawnpoint saved at %s
+emi.totems.system.saveSpawn=§7[World] >> §aSpawnpoint saved at x: %s, y: %s, z: %s en el %s
 
 
 ### Totems
