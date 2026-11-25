@@ -1,6 +1,7 @@
 import {
   Dimension,
   EntityComponentTypes,
+  EntityHealBeforeEvent,
   EquipmentSlot,
   ItemStack,
   Player,
@@ -152,24 +153,21 @@ class Utils {
     const itemsInv: { slot: number; amount: number }[] = [];
     for (let i = 0; i < inv.size; i++) {
       if (reqs <= 0) break;
+      if (slot === EquipmentSlot.Mainhand && i === player.selectedSlotIndex)
+        continue;
       const it = inv.getItem(i);
       if (!it || it.typeId !== this.totem) continue;
       if (it.getLore()[0] !== lore) continue;
-      if (it.amount < reqs) {
-        reqs -= it.amount;
-        itemsInv.push({ slot: i, amount: it.amount });
-      } else {
-        itemsInv.push({ slot: i, amount: reqs });
-        reqs = 0;
-        break;
-      }
+      const take = Math.min(it.amount, reqs);
+      itemsInv.push({ slot: i, amount: take });
+      reqs -= take;
     }
     return reqs <= 0
       ? {
           hasStack: true,
           hand: slot,
           handItem: item,
-          handAmount: amount,
+          handAmount: 0,
           inv: itemsInv,
         }
       : { hasStack: false };
@@ -205,9 +203,11 @@ class Utils {
     player: Player,
     variant: TotemVariant,
     totemData: TotemData,
+    ev: EntityHealBeforeEvent,
     probData?: ProbData
   ): void {
     //  Void Totem
+    ev.cancel = true;
     if (!totemData.hasStack) {
       world.sendMessage({
         translate: "emi.customT.useTotem.notEnought",
@@ -450,19 +450,19 @@ class Utils {
       ],
       sound: "totems.ender",
     },
-    {
-      id: "§0void_totem",
-      data: 4,
-      name: "§r§8Void Totem",
-      lore: ["§r§9On Use: Tp al ultimo SpawnPoint", "> Solo funciona en Vacio"],
-      effects: [
-        { eff: "nausea", dur: 15, amp: 0 },
-        { eff: "resistance", dur: 15, amp: 1 },
-        { eff: "regeneration", dur: 10, amp: 1 },
-        { eff: "fire_resistance", dur: 3, amp: 0 },
-      ],
-      sound: "totem.void",
-    },
+    // {
+    //   id: "§0void_totem",
+    //   data: 4,
+    //   name: "§r§8Void Totem",
+    //   lore: ["§r§9On Use: Tp al ultimo SpawnPoint", "> Solo funciona en Vacio"],
+    //   effects: [
+    //     { eff: "nausea", dur: 15, amp: 0 },
+    //     { eff: "resistance", dur: 15, amp: 1 },
+    //     { eff: "regeneration", dur: 10, amp: 1 },
+    //     { eff: "fire_resistance", dur: 3, amp: 0 },
+    //   ],
+    //   sound: "totem.void",
+    // },
     {
       id: "§0tp_totem",
       data: 5,

@@ -1,5 +1,6 @@
 import {
   EntityComponentTypes,
+  EntityHealBeforeEvent,
   EntityHealCause,
   Player,
   system,
@@ -78,7 +79,7 @@ class TotemLogic {
       const data = utils.GetHandTotem(healedEntity);
       if (!data) return;
       //  Void Totem Logic
-      this.onUseTotem(healedEntity, data);
+      this.onUseTotem(healedEntity, data, ev);
     });
   }
 
@@ -91,7 +92,11 @@ class TotemLogic {
    * @author Emiliocrack1355 - 23/11/26 <11:50 am>
    * @lastModified 23/11/26 <04:25 pm>
    */
-  private onUseTotem(player: Player, data: HandData): void {
+  private onUseTotem(
+    player: Player,
+    data: HandData,
+    ev: EntityHealBeforeEvent
+  ): void {
     const raw = world.getDynamicProperty(utils.WorldDynamicID);
     let config: { prob: number; cost: number } = { prob: 0, cost: 1 };
     if (typeof raw === "string") {
@@ -114,11 +119,11 @@ class TotemLogic {
     const variant = utils.getVariant(lore);
     if (!variant) return;
     if (!totemData.hasStack) {
-      utils.failedTotem(player, variant, totemData);
+      utils.failedTotem(player, variant, totemData, ev);
       return;
     }
     let probData: ProbData | undefined;
-    if (config.prob > 0) {
+    if (config.prob < 100) {
       const random = Math.floor(Math.random() * 100) + 1;
       probData = {
         hasFailed: random >= config.prob,
@@ -127,7 +132,7 @@ class TotemLogic {
       };
     }
     if (probData?.hasFailed)
-      utils.failedTotem(player, variant, totemData, probData);
+      utils.failedTotem(player, variant, totemData, ev, probData);
     else utils.successTotem(player, variant, totemData, probData);
   }
 
@@ -141,32 +146,31 @@ class TotemLogic {
    * @author Emiliocrack1355 - 23/11/26 <02:40 pm>
    */
   public onConsumeTotem(player: Player, totemData: TotemData): void {
+    if (!totemData.hasStack) return;
     const equip = player.getComponent(EntityComponentTypes.Equippable);
     if (!equip) return;
-    if (totemData.hasStack) {
-      if (totemData.handAmount > 0) {
-        const newHandItem = totemData.handItem.clone();
-        newHandItem.amount = totemData.handAmount;
-        equip.setEquipment(totemData.hand, newHandItem);
-      } else {
-        equip.setEquipment(totemData.hand, undefined);
-      }
-      if (totemData.inv) {
-        const inv = player.getComponent(
-          EntityComponentTypes.Inventory
-        )?.container;
-        if (!inv) return;
-        for (const { slot, amount } of totemData.inv) {
-          const it = inv.getItem(slot);
-          if (!it) return;
-          const remaining = it.amount - amount;
-          if (remaining > 0) {
-            const newItem = it.clone();
-            newItem.amount = remaining;
-            inv.setItem(slot, newItem);
-          } else {
-            inv.setItem(slot, undefined);
-          }
+    if (totemData.handAmount > 0) {
+      const newHandItem = totemData.handItem.clone();
+      newHandItem.amount = totemData.handAmount;
+      equip.setEquipment(totemData.hand, newHandItem);
+    } else {
+      equip.setEquipment(totemData.hand, undefined);
+    }
+    if (totemData.inv) {
+      const inv = player.getComponent(
+        EntityComponentTypes.Inventory
+      )?.container;
+      if (!inv) return;
+      for (const { slot, amount } of totemData.inv) {
+        const it = inv.getItem(slot);
+        if (!it) return;
+        const remaining = it.amount - Math.min(amount, it.amount);
+        if (remaining > 0) {
+          const newItem = it.clone();
+          newItem.amount = remaining;
+          inv.setItem(slot, newItem);
+        } else {
+          inv.setItem(slot, undefined);
         }
       }
     }
